@@ -1,0 +1,25 @@
+html, body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+.blue-hover:hover {
+    background-color: #a6d8ff;
+}
+
+.dark-hover:hover {
+    background-color: lightgray;
+}
+
+.main_title {
+    font-size: 32px;
+    font-weight: bold;
+}
+.bg-1 {
+    background-color: #9d9fa3;
+    color : white;
+}
+
+.bg-2 {
+    background-color: #a6d8ff;
+}
