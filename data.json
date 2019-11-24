@@ -1,1 +1,12 @@
-{"tasks":[],"dates":[],"fields":{"Maths":[],"Physique":[],"SI":[],"IPT":[],"Anglais":[],"Français":[]}}
+{
+    "tasks": {
+    },
+    "fields": [
+        "Maths",
+        "Physique",
+        "SI",
+        "IPT",
+        "Anglais",
+        "Français"
+    ]
+}

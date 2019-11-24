@@ -8,28 +8,66 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-light">
-    <div class="mx-auto mt-5 w-75 p-0">
-        <div class="w-100 rounded-top border-bottom m-0 row bg-2">
-            <div class="mx-auto my-2 main_title">Ajouter une tâche</div>
+<body class="bg-3">
+    <div class="mx-auto mt-5 w-75 p-0 container">
+        <div class="rounded-top border-bottom m-0 row p-1 text-center middle text-center bg-2">
+            <div class="mx-auto my-2 main_title">Agenda</div>
         </div>
-        <div class="w-100 m-0 border-left border-bottom border-right rounded-bottom p-3 container">
-            <div class="bg-light row w-100 m-0">
-                <div class="col-6">
-                    <span>Matière  : </span>
-                    <span>
-                        <select class="ml-3² rounded border w-50 px-1 py-0">
-                            <option>Maths</option>
-                            <option>Physique</option>
-                        </select>
-                    </span>
+        <div class="row m-0">
+            <div class="col-3 pl-0 pt-2 pb-2 pr-0 pl-0">
+                <div class="">
+                    <div class="bg-2 m-0 p-2">
+                        <h6 class="m-0"><b>Matières</b></h6>
+                    </div>
+                    <% for (var i=0; i<locals.fields.length; i++) { %>
+                        <div class="border-bottom dark-hover pl-2"><%=fields[i]%></div>
+                    <% } %>
                 </div>
-                <div class="col-2 text-right">Date (J/M/A) :</div>
-                <div class="col-4">
-                    <input type="text" class="rounded border w-100 px-1 py-0">
+                <div class="mt-2 border bg-2 p-2 dark-hover" id="toNew">
+                    <h6 class="m-0"><b>Ajouter une tâche</b></h6>
                 </div>
             </div>
-            <div><hr></div>
+            <div class="pl-4 pt-2 pr-0 pb-2 col-9">
+                <div class="">
+                    <div class="border-bottom p-2 bg-2">
+                        <h6 class="m-0"><b>Ajouter une tâche</b></h6>
+                    </div>
+                    <form method="POST" action="/new">
+                        <div class="container p-2 border-left border-right border-bottom">
+                            <div class="row p-2 w-75 mx-auto">
+                                <div class="col-2">
+                                    <b>Matière</b>
+                                </div>
+                                <div class="col-4">
+                                    <select class="bg-light rounded border w-100" name="field">
+                                        <% for (var i=0; i<locals.fields.length; i++) { %>
+                                            <option><%=fields[i]%></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <div class="col-2">
+                                    <b>Jour</b>
+                                </div>
+                                <div class="col-4">
+                                    <input type="date" class="bg-light rounded border w-100" name="date" value="<%= today %>">
+                                </div>
+                            </div>
+                            <div class="row p-2">
+                                <textarea class="bg-light border rounded mx-auto" style="width:90%;" rows=4 name="text"></textarea>
+                            </div>
+                            <div class="row">
+                                <input class="bg-2 border-0 dark-hover mx-auto px-2 m-1" type="submit"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </body>
+
+<script>
+    $("#toNew").click(function() {
+        window.location.href="/new";
+    });
+</script>        

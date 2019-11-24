@@ -36,62 +36,58 @@ app.use(express.urlencoded());
 app.set("view engine", "ejs");
 
 app.get("/", function(req, res) {
+    var today = getToday();
+    var tasks = {};
+    for (var date = today; date < today+7; date++) {
+        if (typeof(db.tasks[date]) != "undefined")
+        tasks[date] = db.tasks[date];
+    }  
     res.render("home.ejs", {
-        fields : Object.keys(db.fields),
-        recent : [db.dates]
+        fields : db.fields,
+        tasks: tasks
     });
 })
 
 app.get("/new", function(req, res) {
-    res.render("new.ejs");
+    var date = new Date();
+    var today = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+    res.render("new.ejs", {
+        fields: db.fields,
+        today : today
+    });
 });
 
 app.post("/new", function(req, res) {
-    var date = req.date;
-    var field = req.field;
-    var text = req.text;
-    var add = req.add;
-    if (!Object.keys(db.byDate).includes(date)) {
-        db.byDate[date]= [];
+    var date = req.body.date;
+    var field = req.body.field;
+    var text = req.body.text;
+
+    date = date.split("-").join("/"); //yy-mm-jj to yy/mm/jj
+    date = Math.floor(Date.parse(date)/1000/3600/24); //date to day-level timestamp (n of days since epoch)
+
+    var task = {
+        field : field,
+        text : text
     }
-    var taskExists = false;
-    var taskFound;
-    db.byField[field].foreach(function(task){
-        if (db.byField[field][i].date == date) {
-            taskExists = true;
-            taskFound = db;
-            return;
-        }
-    });
-    if (taskExists) {
-        if (add == "add") {
-            taskFound.text += "\n" + text;
-        } else {
-            task.text = text;
-        }
+
+    if (Object.keys(db.tasks).includes(date.toString())) {
+        db.tasks[date].push(task)
     } else {
-        var task = {
-            id : taskid,
-            text : task,
-            date : date
-        }
-        db.tasks.push(task);
-        if (!Object.keys(db.byDate).includes(date)) {
-            db.byDate[date] = [taskid]
-        } else {
-            db.byDate[date].push(taskid);
-        }
-        db.byField.push(taskid);
-        taskid += 1;
+        db.tasks[date] = [task]
     }
+    res.redirect("/new");
+    saveData(db);
 });
 
 app.listen(8080);
+console.log("Listening to 8080");
 
-function saveData(data) {
+async function saveData(data) {
     fs.writeFileSync("data.json", JSON.stringify(data));
 }
 
-function existingDates(data) {
 
+function getToday() {
+    var date = new Date();
+    return Math.floor(date.getTime()/1000/3600/24);
 }

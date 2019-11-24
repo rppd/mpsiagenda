@@ -1,6 +1,5 @@
 html, body {
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
 }
 
 .blue-hover:hover {
@@ -22,4 +21,13 @@ html, body {
 
 .bg-2 {
     background-color: #a6d8ff;
+}
+
+.bg-3 {
+    background-color: #f6f6f6;
+}
+
+p {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
 }

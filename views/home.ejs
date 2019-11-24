@@ -7,51 +7,56 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
-<body><title>"salut les débiles"</title></body>
-<body class="bg-light">
+
+<body class="bg-3">
     <div class="mx-auto mt-5 w-75 p-0 container">
         <div class="rounded-top border-bottom m-0 row p-1 text-center middle text-center bg-2">
             <div class="mx-auto my-2 main_title">Agenda</div>
         </div>
         <div class="row m-0">
-            <div class="col-3 bg-light pl-0 pt-2 pb-2 pr-0 pl-0">
-                <div class="rounded border">
-                    <div class="bg-2 rounded-top m-0 p-2">
-                        <h5 class="m-0"><b>Matières</b></h5>
+            <div class="col-3 pl-0 pt-2 pb-2 pr-0 pl-0">
+                <div class="">
+                    <div class="bg-2 m-0 p-2">
+                        <h6 class="m-0"><b>Matières</b></h6>
                     </div>
-                    <% for (var i=0; i<locals.fields.length; i++) {
-                        if (i == fields.length-1) { %>
-                        <div class="rounded-bottom dark-hover pl-2"><%=fields[i]%></div>
-                    <% } else { %>
+                    <% for (var i=0; i<locals.fields.length; i++) { %>
                         <div class="border-bottom dark-hover pl-2"><%=fields[i]%></div>
-                    <% } }%>
+                    <% } %>
                 </div>
-                <div class="rounded mt-2 border bg-2 p-2 dark-hover" id="toNew">
-                    <h5 class="m-0"><b>Ajouter une tâche</b></h5>
+                <div class="mt-2 border bg-2 p-2 dark-hover" id="toNew">
+                    <h6 class="m-0"><b>Ajouter une tâche</b></h6>
                 </div>
             </div>
-            <div class="pl-2 pt-2 pr-0 pb-2 col-9 bg-light">
-                <div class="border rounded">
-                    <div class="border-bottom rounded-top p-2 bg-2">
-                        <h2 class="m-0">Mardi 11 Novembre</h2>
-                    </div>
-                    <div class="row p-2">
-                        <div class="col-2 text-right">
-                            <b>Maths : </b>
-                        </div>
-                        <div class="col-10 text-left">
-                            <p>Exercices 1-6</p>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row p-2 text-right">
-                            <div class="col-2">
-                                <b>SI : </b>
+            <div class="pl-4 pt-2 pr-0 pb-2 col-9">
+                <div class="container">
+                    <% Object.keys(tasks).forEach(function(date) {
+                        var posix = new Date(date*24*3600*1000);
+                        var jour = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"][posix.getDay()];
+                        jour += " " + (posix.getDay()+1);
+                        if (posix.getDay() == 0) {
+                            jour += "er"
+                        }
+                        var mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Dimanche"][posix.getMonth()]; %>
+                        <div class="pb-2">
+                            <div class="border-bottom p-2 bg-2 row">
+                                    <h6 class="m-0"><b><%= jour + " " + mois%></b></h6>
                             </div>
-                            <div class="col-10 text-left">
-                                <p>QCM n°6</p>
-                            </div>
+                            <% for (var i = 0; i < tasks[date].length; i++) {
+                                var task = tasks[date][i];
+                                if (i!=0) { %>
+                                    <hr class="mx-3 my-1">
+                                <% } %>
+                                <div class="row p-1">
+                                    <div class="col-2 text-right">
+                                        <p><b><%= task.field %></b></p>
+                                    </div>
+                                    <div class="col-10 text-left">
+                                        <p><%= task.text %></p>
+                                    </div>
+                                </div>
+                            <%  } %>
                         </div>
+                    <% })  %>
                 </div>
             </div>
         </div>
