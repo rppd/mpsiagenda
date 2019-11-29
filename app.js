@@ -42,9 +42,12 @@ app.get("/", function(req, res) {
         if (typeof(db.tasks[date]) != "undefined")
         tasks[date] = db.tasks[date];
     }  
+    var date = new Date();
+    var today = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
     res.render("home.ejs", {
         fields : db.fields,
-        tasks: tasks
+        tasks: tasks,
+        today: today
     });
 })
 
@@ -58,21 +61,43 @@ app.get("/new", function(req, res) {
 });
 
 app.get("/byfield", function(req, res) {
-    var field = db.fields[req.body.field];
+    var field = req.query.field;
     var today = getToday();
     var tasks = {}
     for (var date = today; date < today+7; date++) {
-        if (Object.keys(db.tasks).includes(date)) {
+        if (Object.keys(db.tasks).includes(date.toString())) {
             var arr =  []
-            db.tasks[date].foreach(function(task) {
-                if (tasks.field == field) arr.push(task)
+            db.tasks[date].forEach(function(task) {
+                if (task.field == field) arr.push(task);
             })
             tasks[date] = arr;
         }
     }
-    res.render("byfield.ejs", {
+    var date = new Date();
+    var today = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+    res.render("home.ejs", {
         fields : db.fields,
-        tasks : tasks 
+        tasks : tasks,
+        today: today
+    });
+});
+
+app.get("/byDate", function(req, res) {
+    var start = req.query.date;
+    var tasks = {};
+    start = start.split("-").join("/"); //yy-mm-jj to yy/mm/jj
+    start = Math.ceil(Date.parse(start)/1000/3600/24); //date to day-level timestamp (n of days since epoch)
+
+    for (var date = start; date < start+7; date++) {
+        if (Object.keys(db.tasks).includes(date.toString())) tasks[date] = db.tasks[date];
+    }
+
+    var date = new Date();
+    var today = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+    res.render("home.ejs", {
+        fields : db.fields,
+        tasks : tasks,
+        today: today
     });
 });
 
@@ -96,6 +121,12 @@ app.post("/new", function(req, res) {
     }
     res.redirect("/new");
     saveData(db);
+});
+
+app.get("/debug/db", function(req, res) {
+    res.set("Content-Type", "text/json");
+    var data = JSON.stringify(db, null, 4);
+    res.end(data);
 });
 
 app.listen(8080);

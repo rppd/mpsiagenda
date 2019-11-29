@@ -21,9 +21,7 @@
                     <div class="bg-2 m-0 p-2">
                         <h6 class="m-0"><b>Matières</b></h6>
                     </div>
-                    <% for (var i=0; i<locals.fields.length; i++) { %>
-                        <div class="border-bottom dark-hover pl-2 toField"><%=fields[i]%></div>
-                    <% } %>
+                    <%- include("partials/fieldList") %>
                 </div>
                 <div class="mt-2 border bg-2 p-2 dark-hover" id="toNew">
                     <h6 class="m-0"><b>Ajouter une tâche</b></h6>

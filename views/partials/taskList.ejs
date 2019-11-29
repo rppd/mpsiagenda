@@ -1,0 +1,30 @@
+<div class="container">
+        <% Object.keys(tasks).forEach(function(date) {
+            var posix = new Date(date*24*3600*1000);
+            var jour = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"][posix.getDay()];
+            jour += " " + (posix.getDay()+1);
+            if (posix.getDay() == 0) {
+                jour += "er"
+            }
+            var mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"][posix.getMonth()]; %>
+            <div class="pb-2">
+                <div class="border-bottom p-2 bg-2 row">
+                        <h6 class="m-0"><b><%= jour + " " + mois%></b></h6>
+                </div>
+                <% for (var i = 0; i < tasks[date].length; i++) {
+                    var task = tasks[date][i];
+                    if (i!=0) { %>
+                        <hr class="mx-3 my-1">
+                    <% } %>
+                    <div class="row p-1">
+                        <div class="col-2 text-right">
+                            <p><b><%= task.field %></b></p>
+                        </div>
+                        <div class="col-10 text-left">
+                            <p><%= task.text %></p>
+                        </div>
+                    </div>
+                <%  } %>
+            </div>
+        <% })  %>
+    </div>

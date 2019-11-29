@@ -16,50 +16,9 @@
             <div class="mx-auto my-2 main_title">Agenda</div>
         </div>
         <div class="row m-0">
-            <div class="col-3 pl-0 pt-2 pb-2 pr-0 pl-0">
-                <div class="">
-                    <div class="bg-2 m-0 p-2">
-                        <h6 class="m-0"><b>Matières</b></h6>
-                    </div>
-                    <% for (var i=0; i<locals.fields.length; i++) { %>
-                        <div class="border-bottom dark-hover pl-2 toField "><%=fields[i]%></div>
-                    <% } %>
-                </div>
-                <div class="mt-2 border bg-2 p-2 dark-hover" id="toNew">
-                    <h6 class="m-0"><b>Ajouter une tâche</b></h6>
-                </div>
-            </div>
+            <%- include("partials/leftBar") %>
             <div class="pl-4 pt-2 pr-0 pb-2 col-9">
-                <div class="container">
-                    <% Object.keys(tasks).forEach(function(date) {
-                        var posix = new Date(date*24*3600*1000);
-                        var jour = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"][posix.getDay()];
-                        jour += " " + (posix.getDay()+1);
-                        if (posix.getDay() == 0) {
-                            jour += "er"
-                        }
-                        var mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Dimanche"][posix.getMonth()]; %>
-                        <div class="pb-2">
-                            <div class="border-bottom p-2 bg-2 row">
-                                    <h6 class="m-0"><b><%= jour + " " + mois%></b></h6>
-                            </div>
-                            <% for (var i = 0; i < tasks[date].length; i++) {
-                                var task = tasks[date][i];
-                                if (i!=0) { %>
-                                    <hr class="mx-3 my-1">
-                                <% } %>
-                                <div class="row p-1">
-                                    <div class="col-2 text-right">
-                                        <p><b><%= task.field %></b></p>
-                                    </div>
-                                    <div class="col-10 text-left">
-                                        <p><%= task.text %></p>
-                                    </div>
-                                </div>
-                            <%  } %>
-                        </div>
-                    <% })  %>
-                </div>
+                <%- include("partials/taskList") %>
             </div>
         </div>
     </div>
@@ -72,5 +31,10 @@
 
     $(".toHome").click(function() {
         window.location.href="/";
+    });
+
+    $(".toField").click(function(event) {
+        console.log("tofield");
+        window.location.href="/byField?field="+encodeURI(event.target.innerHTML);
     });
 </script>        

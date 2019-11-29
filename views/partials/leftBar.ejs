@@ -1,0 +1,30 @@
+<div class="col-3 pl-0 pt-2 pb-2 pr-0 pl-0">
+    <div class="bg-2 m-0 p-2">
+        <h6 class="m-0"><b>Matières</b></h6>
+    </div>
+    <% for (var i=0; i<locals.fields.length; i++) { %>
+        <div class="border-bottom dark-hover pl-2 toField"><%=fields[i]%></div>
+    <% } %>
+    <div class="mt-2 border bg-2 p-2 dark-hover toNew">
+        <h6 class="m-0"><b>Ajouter une tâche</b></h6>
+    </div>
+    <div class="mt-2 border bg-2 p-2 dark-hover toDate">
+        <h6 class="m-0"><b>Choisir une date</b></h6>
+    </div>
+    <div class="mt-0 border-bottom p-2 dark-hover">
+        <input type="date" class="bg-light rounded border w-100" id="dateInput" value="<%=today%>">
+    </div>
+</div>
+<script>
+$(".toNew").click(function() {
+    window.location.href="/new";
+});
+
+$(".toField").click(function(event) {
+    window.location.href="/byField?field="+encodeURI(event.target.innerHTML);
+});
+
+$(".toDate").click(function(event) {
+    window.location.href="/byDate?date="+$("#dateInput").val();
+});
+</script>
