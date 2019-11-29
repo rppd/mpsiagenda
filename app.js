@@ -57,13 +57,32 @@ app.get("/new", function(req, res) {
     });
 });
 
+app.get("/byfield", function(req, res) {
+    var field = db.fields[req.body.field];
+    var today = getToday();
+    var tasks = {}
+    for (var date = today; date < today+7; date++) {
+        if (Object.keys(db.tasks).includes(date)) {
+            var arr =  []
+            db.tasks[date].foreach(function(task) {
+                if (tasks.field == field) arr.push(task)
+            })
+            tasks[date] = arr;
+        }
+    }
+    res.render("byfield.ejs", {
+        fields : db.fields,
+        tasks : tasks 
+    });
+});
+
 app.post("/new", function(req, res) {
     var date = req.body.date;
     var field = req.body.field;
     var text = req.body.text;
 
     date = date.split("-").join("/"); //yy-mm-jj to yy/mm/jj
-    date = Math.floor(Date.parse(date)/1000/3600/24); //date to day-level timestamp (n of days since epoch)
+    date = Math.ceil(Date.parse(date)/1000/3600/24); //date to day-level timestamp (n of days since epoch)
 
     var task = {
         field : field,

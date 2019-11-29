@@ -1,12 +1,1 @@
-{
-    "tasks": {
-    },
-    "fields": [
-        "Maths",
-        "Physique",
-        "SI",
-        "IPT",
-        "Anglais",
-        "Français"
-    ]
-}
+{"tasks":{"18223":[{"field":"Anglais","text":"Chaptal Science Fair à préparer"}],"18224":[{"field":"Physique","text":"M1 : 5 et 7\r\nM2 : 4 et 5\r\n"},{"field":"Maths","text":"EXO 7 1,2,3,9,10, 11"},{"field":"Anglais","text":"Chaptal Science Fair à préparer"}],"18225":[{"field":"Anglais","text":"Chaptal Science Fair"}],"18227":[{"field":"Maths","text":"TD équations différentielles"}],"18228":[{"field":"Maths","text":"test"}]},"fields":["Maths","Physique","SI","IPT","Anglais","Français"]}
